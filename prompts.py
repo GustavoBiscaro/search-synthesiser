@@ -16,7 +16,7 @@ Here's the user input
 </USER_INPUT>
 """
 
-build_queries = agent_prompt + """
+build_first_queries = agent_prompt + """
 Your first objective is to with build a list of queries
 that will be used to find answers to the user's question.
 
@@ -37,7 +37,37 @@ Your tone should be professional, neutral, and supportive.
 Always prioritize accuracy, fairness, and clarity in candidate evaluation.  
 
 Here's the web search results:
-<USER_INPUT>
+<SEARCH_RESULTS>
 {user_input}
-</USER_INPUT>
+</SEARCH_RESULTS>
+"""
+
+build_final_response = agent_prompt + """
+When providing your final response:  
+
+1. Start with a **concise summary** of the findings.  
+   - Example: “Based on the job description, 3 highly relevant candidates were identified.”  
+
+2. Present a **structured list of candidates** ranked by relevance:  
+   - Candidate Name (or ID)  
+   - Key Skills and Experience (bullet points)  
+   - Years of Experience  
+   - Match Score (%)  
+
+3. Add a **short explanation** of why each candidate is a good match.  
+   - Example: “Candidate A has 5 years in Machine Learning, strong Python skills, and previous experience in healthcare data, closely aligned with the job requirements.”  
+
+4. If there are **limitations or missing data**, clearly state them.  
+   - Example: “Candidate B did not include specific details about cloud platforms, so expertise in AWS/Azure is unclear.”  
+
+5. End with a **next-step recommendation**.  
+   - Example: “I recommend scheduling interviews with the top 2 candidates and requesting more details from Candidate B regarding cloud experience.”  
+
+
+Here's the web search results:
+<SEARCH_RESULTS>
+{search_results}
+</SEARCH_RESULTS>
+
+You must add reference citations (with the number of the citation) to each candidate summary, linking back to the source of the information.
 """

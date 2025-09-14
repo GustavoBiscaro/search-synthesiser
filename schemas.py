@@ -1,15 +1,17 @@
-from pydantic import BaseModel
 from typing import List
-import operator
+from pydantic import BaseModel
 from typing_extensions import Annotated
+import operator
+
 
 class QueryResult(BaseModel):
-  title: str = None
-  url: str = None
-  resume: str = None
+    title: str
+    url: str
+    resume: str
+
 
 class ReportState(BaseModel):
-  user_input: str = None
-  final_response: str = None
-  queries: List[str] = []
-  queries_result: Annotated[List[QueryResult], operator.add]
+    user_input: str
+    queries: List[str] = []
+    query_results: Annotated[List[QueryResult], operator.add] = []  # <-- acumula resultados
+    final_response: str = ""
